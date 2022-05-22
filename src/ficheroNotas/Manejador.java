@@ -35,8 +35,11 @@ public class Manejador extends DefaultHandler {
         switch (qName) {
 
             case "nombre":
+                
                 al.setNombre(sb.toString());
+                
                 break;
+                
             case "nota1":
                 al.setNota1(Integer.parseInt(sb.toString()));
                 break;
