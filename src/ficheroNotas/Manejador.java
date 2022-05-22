@@ -7,9 +7,6 @@ package ficheroNotas;
 
 import java.util.ArrayList;
 import org.xml.sax.Attributes;
-
-
-
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
@@ -19,57 +16,72 @@ import org.xml.sax.helpers.DefaultHandler;
  */
 public class Manejador extends DefaultHandler {
 
-    //extender de defaulthandler
-    ArrayList<Empleado> listaEmpleados = new ArrayList<>();
-    Empleado em;
+    //crear el arraylist
+    ArrayList<Alumno> listaAlumnos = new ArrayList<>();
+    //instanciamos un objeto
+    Alumno al;
 
-    StringBuilder buffer = new StringBuilder();
+    //buffer con stringbuilder
+    StringBuilder sb = new StringBuilder();
 
+    //implementar los metodos override, endElement, startElement y characters
     @Override
-    public void characters(char[] chars, int i, int i1) throws SAXException   {
-        buffer.append(chars, i, i1); //To change body of generated methods, choose Tools | Templates.
+    public void characters(char[] ch, int start, int length) throws SAXException {
+        sb.append(ch, start, length); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void endElement(String string, String string1, String string2) throws SAXException {
-        switch (string2) {
-            case "nombre":  em.setNombre(buffer.toString());
-                break;
-            case "edad":  em.setEdad(Integer.parseInt(buffer.toString()));
-                break;
-            case "sexo":   em.setSexo(buffer.toString());
-                break;
-            case "categoria":  em.setCategoria(buffer.toString());
-                break;
-
-        }
-
-    }
-    //importante importar todo con org
-
-    @Override
-    public void startElement(String string, String string1, String string2, Attributes atrbts) throws SAXException {
-
-        switch (string2) {
-            case "Empleado":
-                em = new Empleado();
-                listaEmpleados.add(em);
-                em.setId(atrbts.getValue("id"));
-                break;
+    public void endElement(String uri, String localName, String qName) throws SAXException {
+        switch (qName) {
 
             case "nombre":
-            case "edad":
-            case "sexo":
-            case "categoria":
-                buffer.delete(0, buffer.length());//borramos
+                al.setNombre(sb.toString());
                 break;
-        }
+            case "nota1":
+                al.setNota1(Integer.parseInt(sb.toString()));
+                break;
+            case "nota2":
+                al.setNota2(Integer.parseInt(sb.toString()));
+                break;
+            case "proyecto":
+                al.setProyecto(Integer.parseInt(sb.toString()));
+                break;
+            case "practica":
+                al.setPractica(Integer.parseInt(sb.toString()));
+                break;
 
+        }
     }
-    //metodo para usar en la clase principal
-    public ArrayList<Empleado> obtenerLista(){
+
+    @Override
+    public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+
+        switch (qName) {
+            case "alumno":
+                        al = new Alumno();
+                        listaAlumnos.add(al);
+                        al.setId(attributes.getValue("id"));
+             break;
+             
+            case "nombre":
+               
+            case "nota1":
+                
+            case "nota2":
+               
+            case "proyecto":
+                
+            case "practica":
+                sb.delete(0, sb.length());
+                
+                break;
+
+        }
+    }
     
-        return listaEmpleados;
+    public ArrayList<Alumno> obtenerLista(){
+        
+        return listaAlumnos;
     }
 
 }

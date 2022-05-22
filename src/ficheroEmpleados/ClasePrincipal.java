@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ficheroNotas;
+package ficheroEmpleados;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,25 +19,21 @@ import org.xml.sax.SAXException;
  */
 public class ClasePrincipal {
     
-    public static void main(String[] args) throws SAXException, ParserConfigurationException, IOException {
+    public static void main(String[] args) throws ParserConfigurationException, SAXException,IOException {
         
-        File f = new File("notas.xml");
-        
-        SAXParserFactory spf =  SAXParserFactory.newInstance();
-        SAXParser sp = spf.newSAXParser();//javax
+        File f = new File("empleados2.xml");
+        SAXParserFactory spf = SAXParserFactory.newInstance();
+        SAXParser sp = spf.newSAXParser();//importar con javax y arrojar las excepciones
         
         Manejador m = new Manejador();
         
-        sp.parse(f, m);
+        sp.parse(f,m);
         
-        ArrayList<Alumno> lista = m.obtenerLista();
+        ArrayList<Empleado> lista = m.obtenerLista();
         
-        
-        for (Alumno alumno : lista) {
-            
-            System.out.println(alumno);
-            
-        }
+        lista.forEach((empleado) -> {
+            System.out.println(empleado);
+        });
         
         
         
